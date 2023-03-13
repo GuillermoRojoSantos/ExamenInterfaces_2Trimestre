@@ -115,18 +115,54 @@ public class HelloController implements Initializable {
 
     @FXML
     void guardarAlumno(ActionEvent event) {
-        if (txtNombre.getText().isEmpty()&&
-            txtApellido.getText().isEmpty()&&
-            txtAD.getText().isEmpty()&&
-            txtSGE.getText().isEmpty()&&
-            txtDI.getText().isEmpty()&&
-            txtPMDM.getText().isEmpty()&&
-            txtPSP.getText().isEmpty()&&
-            txtEIE.getText().isEmpty()&&
-            txtHLC.getText().isEmpty()){
+        if (!txtNombre.getText().isEmpty() &&
+                !txtApellido.getText().isEmpty() &&
+                !txtAD.getText().isEmpty() &&
+                !txtSGE.getText().isEmpty() &&
+                !txtDI.getText().isEmpty() &&
+                !txtPMDM.getText().isEmpty() &&
+                !txtPSP.getText().isEmpty() &&
+                !txtEIE.getText().isEmpty() &&
+                !txtHLC.getText().isEmpty()) {
 
-
-
+            if ((Float.parseFloat(txtAD.getText()) <= 10.00) && (Float.parseFloat(txtAD.getText()) >= 0.00)) {
+                if ((Float.parseFloat(txtSGE.getText()) <= 10.00) && (Float.parseFloat(txtSGE.getText()) >= 0.00)) {
+                    if ((Float.parseFloat(txtDI.getText()) <= 10.00) && (Float.parseFloat(txtDI.getText()) >= 0.00)) {
+                        if ((Float.parseFloat(txtPMDM.getText()) <= 10.00) && (Float.parseFloat(txtPMDM.getText()) >= 0.00)) {
+                            if ((Float.parseFloat(txtPSP.getText()) <= 10.00) && (Float.parseFloat(txtPSP.getText()) >= 0.00)) {
+                                if ((Float.parseFloat(txtEIE.getText()) <= 10.00) && (Float.parseFloat(txtEIE.getText()) >= 0.00)) {
+                                    if ((Float.parseFloat(txtHLC.getText()) <= 10.00) && (Float.parseFloat(txtHLC.getText()) >= 0.00)) {
+                                        Alumno alumno = new Alumno(txtNombre.getText(),
+                                                txtApellido.getText(),
+                                                Float.parseFloat(txtAD.getText()),
+                                                Float.parseFloat(txtSGE.getText()),
+                                                Float.parseFloat(txtDI.getText()),
+                                                Float.parseFloat(txtPMDM.getText()),
+                                                Float.parseFloat(txtPSP.getText()),
+                                                Float.parseFloat(txtEIE.getText()),
+                                                Float.parseFloat(txtHLC.getText()));
+                                        tablaAlumnos.getItems().add(alumno);
+                                    }else {
+                                        System.out.println("Nota HLC no valida");
+                                    }
+                                }else {
+                                    System.out.println("Nota EIE no valida");
+                                }
+                            }else {
+                                System.out.println("Nota PSP no valida");
+                            }
+                        }else {
+                            System.out.println("Nota PMDM no valida");
+                        }
+                    }else {
+                        System.out.println("Nota DI no valida");
+                    }
+                }else {
+                    System.out.println("Nota SGE no valida");
+                }
+            }else {
+                System.out.println("Nota AD no valida");
+            }
         }
 
     }
@@ -141,4 +177,7 @@ public class HelloController implements Initializable {
 
     }
 
+    private boolean hasSuspended(Alumno alumno){
+        return false;
+    }
 }
