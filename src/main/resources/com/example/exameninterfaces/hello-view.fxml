@@ -1,16 +1,282 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.exameninterfaces.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="654.0" minWidth="1156.0" prefHeight="654.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.exameninterfaces.HelloController">
+   <top>
+      <Pane prefHeight="98.0" prefWidth="1159.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="344.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Examen de interfaces" textAlignment="CENTER">
+               <font>
+                  <Font name="Calibri" size="54.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <TableView id="tabla_Alumnos" fx:id="tablaAlumnos" onMouseClicked="#verInfoAlumno" prefHeight="425.0" prefWidth="968.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn id="cNombre" fx:id="cNombre" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" text="Nombre" />
+          <TableColumn id="cApellido" fx:id="cApellido" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" text="Apellido" />
+            <TableColumn id="cAD" fx:id="cAD" maxWidth="98.2" minWidth="98.2" prefWidth="98.2" resizable="false" text="AD" />
+            <TableColumn id="cSGE" fx:id="cSGE" maxWidth="98.2" minWidth="98.2" prefWidth="98.2" resizable="false" text="SGE" />
+            <TableColumn id="cDI" fx:id="cDI" maxWidth="98.2" minWidth="98.2" prefWidth="98.2" resizable="false" text="DI" />
+            <TableColumn id="cPMDM" fx:id="cPMDM" maxWidth="98.2" minWidth="98.2" prefWidth="98.2" resizable="false" text="PMDM" />
+            <TableColumn id="cPSP" fx:id="cPSP" maxWidth="98.2" minWidth="98.2" prefWidth="98.2" resizable="false" text="PSP" />
+            <TableColumn id="cEIE" fx:id="cEIE" maxWidth="98.2" minWidth="98.2" prefWidth="98.2" resizable="false" text="EIE" />
+            <TableColumn id="cHLC" fx:id="cHLC" maxWidth="98.2" minWidth="98.2" prefWidth="98.2" resizable="false" text="HLC" />
+        </columns>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+         <tooltip>
+            <Tooltip text="Tabla con los alumnos registrados" />
+         </tooltip>
+      </TableView>
+   </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="367.0" prefWidth="171.0" spacing="140.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="btnPDF" fx:id="btnPDF" mnemonicParsing="false" onAction="#jasperPDF" text="Descargar PDF">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <tooltip>
+                  <Tooltip text="Descargar las notas en formato PDF" />
+               </tooltip>
+            </Button>
+            <Button fx:id="btnSalir" minWidth="107.0" mnemonicParsing="false" onAction="#exit" prefWidth="107.0" text="Salir" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <tooltip>
+                  <Tooltip text="Salir de la aplicación" />
+               </tooltip>
+            </Button>
+            <Button id="btnAddAlumno" fx:id="btnAddAlumno" mnemonicParsing="false" onAction="#guardarAlumno" text="Añadir Alumno">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <tooltip>
+                  <Tooltip text="Añadir un nuevo alumno" />
+               </tooltip>
+            </Button>
+         </children>
+      </VBox>
+   </right>
+   <bottom>
+      <GridPane alignment="CENTER" prefHeight="143.0" prefWidth="916.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtNombre">
+                     <tooltip>
+                        <Tooltip text="Nombre del alumno" />
+                     </tooltip>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtApellido">
+                     <tooltip>
+                        <Tooltip text="Apellido del alumno" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AD:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtAD">
+                     <tooltip>
+                        <Tooltip text="Nota de AD" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SGE:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtSGE">
+                     <tooltip>
+                        <Tooltip text="Nota de SGE" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DI:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtDI">
+                     <tooltip>
+                        <Tooltip text="Nota de DI" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PMDM:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtPMDM">
+                     <tooltip>
+                        <Tooltip text="Nota de PMDM" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PSP:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtPSP">
+                     <tooltip>
+                        <Tooltip text="Nota de PSP" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EIE:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtEIE">
+                     <tooltip>
+                        <Tooltip text="Nota de EIE" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <padding>
+                  <Insets right="35.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="HLC:">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtHLC">
+                     <tooltip>
+                        <Tooltip text="Nota de HLC" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets right="172.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </bottom>
+</BorderPane>
