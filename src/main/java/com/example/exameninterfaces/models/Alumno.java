@@ -2,12 +2,14 @@ package com.example.exameninterfaces.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.text.DecimalFormat;
 import java.text.Format;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Alumno {
     private String nombre;
     private String apellido;
