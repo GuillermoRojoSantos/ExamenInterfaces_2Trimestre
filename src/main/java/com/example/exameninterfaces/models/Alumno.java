@@ -3,6 +3,9 @@ package com.example.exameninterfaces.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.text.DecimalFormat;
+import java.text.Format;
+
 @Data
 @AllArgsConstructor
 public class Alumno {
@@ -16,5 +19,10 @@ public class Alumno {
     private Float EIE;
     private Float HLC;
 
-
+    public Float getMedia(){
+        var result = (this.AD+this.SGE+this.DI+this.PMDM+this.PSP+this.EIE+this.HLC)/7;
+        Format format = new DecimalFormat("#.##");
+        result= Float.parseFloat(format.format(result));
+        return result;
+    }
 }

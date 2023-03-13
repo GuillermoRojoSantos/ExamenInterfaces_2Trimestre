@@ -6,17 +6,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
+
+    static Alert alert = new Alert(Alert.AlertType.NONE);
 
     @FXML
     private Button btnAddAlumno;
@@ -102,7 +104,8 @@ public class HelloController implements Initializable {
         ObservableList<Alumno> alumnos = FXCollections.observableArrayList(
                 new Alumno("Pablo", "Perez", 5.7f, 5.2f, 7f, 10f, 10f, 10f, 2f),
                 new Alumno("Guillermo", "Garcia", 9.5f, 10f, 4.9f, 4f, 8f, 7f, 6f),
-                new Alumno("Luis", "Lopez", 10f, 10f, 10f, 10f, 10f, 10f, 0f)
+                new Alumno("Luis", "Lopez", 10f, 10f, 10f, 10f, 10f, 10f, 0f),
+                new Alumno("YE", "YE", 10f, 10f, 10f, 10f, 10f, 10f, 10f)
         );
         tablaAlumnos.setItems(alumnos);
     }
@@ -142,26 +145,40 @@ public class HelloController implements Initializable {
                                                 Float.parseFloat(txtEIE.getText()),
                                                 Float.parseFloat(txtHLC.getText()));
                                         tablaAlumnos.getItems().add(alumno);
-                                    }else {
-                                        System.out.println("Nota HLC no valida");
+                                    } else {
+                                        alert.setAlertType(Alert.AlertType.WARNING);
+                                        alert.setContentText("La nota de HLC introducida no es valida");
+                                        alert.show();
                                     }
-                                }else {
-                                    System.out.println("Nota EIE no valida");
+                                } else {
+                                    alert.setAlertType(Alert.AlertType.WARNING);
+                                    alert.setContentText("La nota de EIE introducida no es valida");
+                                    alert.show();
                                 }
-                            }else {
-                                System.out.println("Nota PSP no valida");
+                            } else {
+                                alert.setAlertType(Alert.AlertType.WARNING);
+                                alert.setContentText("La nota de PSP introducida no es valida");
+                                alert.show();
                             }
-                        }else {
-                            System.out.println("Nota PMDM no valida");
+                        } else {
+                            alert.setAlertType(Alert.AlertType.WARNING);
+                            alert.setContentText("La nota de PMDM introducida no es valida");
+                            alert.show();
                         }
-                    }else {
-                        System.out.println("Nota DI no valida");
+                    } else {
+                        alert.setAlertType(Alert.AlertType.WARNING);
+                        alert.setContentText("La nota de DI introducida no es valida");
+                        alert.show();
                     }
-                }else {
-                    System.out.println("Nota SGE no valida");
+                } else {
+                    alert.setAlertType(Alert.AlertType.WARNING);
+                    alert.setContentText("La nota de SGE introducida no es valida");
+                    alert.show();
                 }
-            }else {
-                System.out.println("Nota AD no valida");
+            } else {
+                alert.setAlertType(Alert.AlertType.WARNING);
+                alert.setContentText("La nota de AD introducida no es valida");
+                alert.show();
             }
         }
 
@@ -174,10 +191,100 @@ public class HelloController implements Initializable {
 
     @FXML
     void verInfoAlumno(MouseEvent event) {
-
+        Alumno alumno = tablaAlumnos.getSelectionModel().getSelectedItem();
+        alert.setAlertType(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Alumno: " + alumno.getNombre());
+        alert.setGraphic(null);
+        alert.setHeaderText(null);
+        alert.setHeight(150);
+        Map<String, Object> resultado =suspenso(alumno);
+        if ((boolean) resultado.get("suspenso")) {
+            alert.setContentText("El alumno "+alumno.getNombre()+" "+alumno.getApellido()+" ha suspendido la " +
+                    "asignatura "+resultado.get("asignatura")+" con una nota de "+resultado.get("nota"));
+        }else{
+            alert.setContentText("El alumno "+alumno.getNombre()+" "+alumno.getApellido()+" tiene una media de "+
+                    alumno.getMedia());
+        }
+        alert.show();
     }
 
-    private boolean hasSuspended(Alumno alumno){
-        return false;
+    private Map<String, Object> suspenso(Alumno alumno) {
+        Map<String, Object> result = new HashMap<>();
+        if (alumno.getAD() > 5f) {
+            if (alumno.getSGE() > 5f) {
+                if (alumno.getDI() > 5f) {
+                    if (alumno.getPMDM() > 5f) {
+                        if (alumno.getPSP() > 5f) {
+                            if (alumno.getEIE() > 5f) {
+                                if (alumno.getHLC() > 5f) {
+                                    result.put("suspenso", false);
+                                } else {
+                                    result.put("suspenso", true);
+                                    result.put("nota",alumno.getHLC());
+                                    result.put("asignatura","HLC");
+                                }
+                            } else {
+                                result.put("suspenso", true);
+                                result.put("nota",alumno.getEIE());
+                                result.put("asignatura","EIE");
+                            }
+                        } else {
+                            result.put("suspenso", true);
+                            result.put("nota",alumno.getPSP());
+                            result.put("asignatura","PSP");
+                        }
+                    } else {
+                        result.put("suspenso", true);
+                        result.put("nota",alumno.getPMDM());
+                        result.put("asignatura","PMDM");
+                    }
+                } else {
+                    result.put("suspenso", true);
+                    result.put("nota",alumno.getDI());
+                    result.put("asignatura","DI");
+                }
+            } else {
+                result.put("suspenso", true);
+                result.put("nota",alumno.getSGE());
+                result.put("asignatura","SGE");
+            }
+        } else {
+            result.put("suspenso", true);
+            result.put("nota",alumno.getAD());
+            result.put("asignatura","AD");
+        }
+        return result;
+    }
+
+    private boolean hasSuspended(Alumno alumno) {
+        if (alumno.getAD() > 5f) {
+            if (alumno.getSGE() > 5f) {
+                if (alumno.getDI() > 5f) {
+                    if (alumno.getPMDM() > 5f) {
+                        if (alumno.getPSP() > 5f) {
+                            if (alumno.getEIE() > 5f) {
+                                if (alumno.getHLC() > 5f) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
